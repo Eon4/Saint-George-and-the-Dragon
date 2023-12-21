@@ -100,8 +100,12 @@ function puzzleCompleted() {
 
 // Function to display the completion message
 function displayCompletionMessage() {
+  // Add a semi-transparent background
+  fill(0, 128); // Change to green (R: 0, G: 128, B: 0) and set alpha to 128
+  rect(0, 0, width, height);
+
   textSize(32);
-  fill(0, 255, 0);
+  fill(0, 255, 0); // Change to green (R: 0, G: 255, B: 0)
   textAlign(CENTER, CENTER);
-  text("Congratulations! You completed the puzzle.\nReload to try again.", width / 2, height / 2);
+  text("Congrats! You completed the puzzle!\nReload to try again.", width / 2, height / 2);
 }
