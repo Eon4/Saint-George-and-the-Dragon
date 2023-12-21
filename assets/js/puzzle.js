@@ -1,6 +1,7 @@
 let num = 4;
 let img, prts, locs, w, h;
 let dragging = false;
+let completed = false;
 
 function preload() {
   img = loadImage('assets/img/dragon.jpg');
@@ -43,6 +44,11 @@ function draw() {
       image(prts[locs[j][i]], w * i, h * j, w - 1, h - 1);
     }
   }
+
+  // Check if the puzzle is completed
+  if (!dragging && puzzleCompleted()) {
+    displayCompletionMessage();
+  }
 }
 
 function mousePressed() {
@@ -52,14 +58,15 @@ function mousePressed() {
 function mouseReleased() {
   dragging = false;
 }
+
 function mouseMoved() {
-    if (dragging) {
-      cursor('grabbing');
-    } else {
-      cursor(HAND);
-    }
+  if (dragging) {
+    cursor('grabbing');
+  } else {
+    cursor(HAND);
   }
-  
+}
+
 function mouseDragged() {
   if (0 <= mouseX && mouseX < width && 0 <= mouseY && mouseY < height &&
     0 <= pmouseX && pmouseX < width && 0 <= pmouseY && pmouseY < height) {
@@ -79,4 +86,22 @@ function swap(a, i1, j1, i2, j2) {
   a[j2][i2] = t;
 }
 
+// Function to check if the puzzle is completed
+function puzzleCompleted() {
+  for (let j = 0; j < num; j++) {
+    for (let i = 0; i < num; i++) {
+      if (locs[j][i] !== num * j + i) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
 
+// Function to display the completion message
+function displayCompletionMessage() {
+  textSize(32);
+  fill(0, 255, 0);
+  textAlign(CENTER, CENTER);
+  text("Congratulations! You completed the puzzle.\nReload to try again.", width / 2, height / 2);
+}
